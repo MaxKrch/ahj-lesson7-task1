@@ -12,6 +12,7 @@ const testServer = async () => {
 	const text = JSON.stringify({
 		message: value
 	});
+	const url = 'https://ahj-lesson7-task1-backend-production.up.railway.app/'
 	
 	const optionReq = {
 		method: 'POST',
@@ -19,7 +20,7 @@ const testServer = async () => {
 		body: text,
 	}
 
-	const response = await fetch('http://localhost:7070', optionReq);
+	const response = await fetch(url, optionReq);
 	const mes = await response.text();
 
 	message.textContent = mes;
