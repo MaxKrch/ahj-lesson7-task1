@@ -274,7 +274,7 @@ export default class Controller {
 
 		const isWindowArea = elementUnderCursor || false;
 
-		if(!isWindowArea) {
+		if(!isWindowArea && event.pageY > 0) {
 			this.render.tickets.append(this.render.movingItems.blank);
 		}
 
@@ -282,7 +282,7 @@ export default class Controller {
 			const isTicket = elementUnderCursor.closest('li.ticket');
 			if(isTicket) {
 				if(!isTicket.classList.contains('selected')) {
-					this.checkBlankItem(isTicket, event);
+					this.checkBlankItem(isTicket);
 				}
 			}
 		}
@@ -377,7 +377,7 @@ export default class Controller {
 
 	}
 
-	checkBlankItem(ticket, event) {
+	checkBlankItem(ticket) {
 		if(!this.render.movingItems.blank) {
 			this.render.createBlankItem()
 		}
