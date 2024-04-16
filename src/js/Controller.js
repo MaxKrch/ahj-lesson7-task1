@@ -263,6 +263,7 @@ export default class Controller {
 
 		this.startMovingTicket(ticketLi);
 	}
+
 	byMoveMouse(event) {
 		if(!this.render.movingItems.moving) {
 			return;
@@ -274,15 +275,20 @@ export default class Controller {
 
 		const isWindowArea = elementUnderCursor || false;
 
-		if(!isWindowArea && event.pageY > 0) {
-			this.render.tickets.append(this.render.movingItems.blank);
-		}
-
 		if(isWindowArea) {
 			const isTicket = elementUnderCursor.closest('li.ticket');
 			if(isTicket) {
 				if(!isTicket.classList.contains('selected')) {
 					this.checkBlankItem(isTicket);
+				}
+			} else {
+				const coordTicketList = this.render.tickets.getBoundingClientRect();
+				
+				if(event.pageY > coordTicketList.bottom) {
+					if(!this.render.movingItems.blank) {
+						this.render.createBlankItem()
+					}
+					this.render.tickets.append(this.render.movingItems.blank);
 				}
 			}
 		}
@@ -383,8 +389,6 @@ export default class Controller {
 		}
 
 		const previeTicket = ticket.previousSibling;
-		const nexTicket = ticket.nextSibling;
-	
 		
 
 		if(previeTicket && previeTicket.classList.contains('blank-ticket')) {
